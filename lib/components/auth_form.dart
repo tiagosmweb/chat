@@ -2,7 +2,11 @@ import 'package:chat/models/auth_form_data.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({Key? key}) : super(key: key);
+  final void Function(AuthFormData) onSubmit;
+  const AuthForm({
+    Key? key,
+    required this.onSubmit,
+  }) : super(key: key);
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -12,7 +16,9 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final _formData = AuthFormData();
   void _submit() {
-    _formKey.currentState?.validate();
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+    widget.onSubmit(_formData);
   }
 
   @override
@@ -33,6 +39,13 @@ class _AuthFormState extends State<AuthForm> {
                   decoration: const InputDecoration(
                     label: Text('Nome'),
                   ),
+                  validator: (nameForm) {
+                    final name = nameForm ?? '';
+                    if (name.trim().length < 5) {
+                      return 'Nome deve ter no minimo 5 caracteres.';
+                    }
+                    return null;
+                  },
                 ),
               TextFormField(
                 key: const ValueKey('email'),
@@ -41,6 +54,14 @@ class _AuthFormState extends State<AuthForm> {
                 decoration: const InputDecoration(
                   label: Text('E-mail'),
                 ),
+                validator: (emailForm) {
+                  final email = emailForm ?? '';
+                  if (email.trim().isEmpty || !email.contains('@')) {
+                    return 'Informe um e-mail valido';
+                  }
+
+                  return null;
+                },
               ),
               TextFormField(
                 key: const ValueKey('senha'),
@@ -50,6 +71,13 @@ class _AuthFormState extends State<AuthForm> {
                 decoration: const InputDecoration(
                   label: Text('Senha'),
                 ),
+                validator: (passwordForm) {
+                  final password = passwordForm ?? '';
+                  if (password.length < 6) {
+                    return 'Senha deve ter no minimo 6 caracteres.';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               ElevatedButton(
