@@ -7,9 +7,9 @@ import 'package:chat/core/services/auth/auth_service.dart';
 
 class AuthMockService implements AuthService {
   static const _defaultUser = ChatUser(
-    id: '1',
-    name: 'Teste',
-    email: 'teste@gmail.com',
+    id: '456',
+    name: 'Marina',
+    email: 'marina@gmail.com',
     imageUrl: 'assets/images/avatar.png',
   );
 
