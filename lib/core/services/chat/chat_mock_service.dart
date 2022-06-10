@@ -6,30 +6,30 @@ import 'package:chat/core/services/chat/chat_service.dart';
 
 class ChatMockService implements ChatService {
   static final List<ChatMessage> _msgs = [
-    ChatMessage(
-      id: '1',
-      text: 'Ola',
-      createdAt: DateTime.now(),
-      userId: '123',
-      userName: 'Jose',
-      userImageUrl: 'assets/images/avatar.png',
-    ),
-    ChatMessage(
-      id: '2',
-      text: 'Bom dia, vai ter curso hj?',
-      createdAt: DateTime.now(),
-      userId: '456',
-      userName: 'Marina',
-      userImageUrl: 'assets/images/avatar.png',
-    ),
-    ChatMessage(
-      id: '3',
-      text: 'Sim vai ter',
-      createdAt: DateTime.now(),
-      userId: '689',
-      userName: 'Bianca',
-      userImageUrl: 'assets/images/avatar.png',
-    ),
+    // ChatMessage(
+    //   id: '1',
+    //   text: 'Ola',
+    //   createdAt: DateTime.now(),
+    //   userId: '123',
+    //   userName: 'Jose',
+    //   userImageUrl: 'assets/images/avatar.png',
+    // ),
+    // ChatMessage(
+    //   id: '2',
+    //   text: 'Bom dia, vai ter curso hj?',
+    //   createdAt: DateTime.now(),
+    //   userId: '456',
+    //   userName: 'Marina',
+    //   userImageUrl: 'assets/images/avatar.png',
+    // ),
+    // ChatMessage(
+    //   id: '3',
+    //   text: 'Sim vai ter',
+    //   createdAt: DateTime.now(),
+    //   userId: '689',
+    //   userName: 'Bianca',
+    //   userImageUrl: 'assets/images/avatar.png',
+    // ),
   ];
   static MultiStreamController<List<ChatMessage>>? _controller;
   static final _msgsStream = Stream<List<ChatMessage>>.multi((controller) {
@@ -55,7 +55,7 @@ class ChatMockService implements ChatService {
 
     _msgs.add(newMessage);
 
-    _controller?.add(_msgs);
+    _controller?.add(_msgs.reversed.toList());
 
     return newMessage;
   }
